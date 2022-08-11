@@ -25,6 +25,7 @@ export interface FullCalendarSettings {
 	defaultCalendar: number;
 	recursiveLocal: boolean;
 	firstDay: number;
+	defaultCalendarView: string;
 }
 
 export const DEFAULT_SETTINGS: FullCalendarSettings = {
@@ -32,6 +33,7 @@ export const DEFAULT_SETTINGS: FullCalendarSettings = {
 	defaultCalendar: 0,
 	recursiveLocal: false,
 	firstDay: 0,
+	defaultCalendarView: "",
 };
 
 const WEEKDAYS = [
@@ -42,6 +44,14 @@ const WEEKDAYS = [
 	"Thursday",
 	"Friday",
 	"Saturday",
+];
+
+const VIEWS = [
+	"timeGridDay",
+	"timeGrid3Days",
+	"timeGridWeek",
+	"listWeek",
+	"dayGridMonth",
 ];
 
 export function addCalendarButton(
@@ -156,6 +166,25 @@ export class FullCalendarSettingTab extends PluginSettingTab {
 				dropdown.setValue(this.plugin.settings.firstDay.toString());
 				dropdown.onChange(async (codeAsString) => {
 					this.plugin.settings.firstDay = Number(codeAsString);
+					await this.plugin.saveSettings();
+				});
+			});
+
+		new Setting(containerEl)
+			.setName("Default calendar view")
+			.setDesc("Choose the default calendar view")
+			.addDropdown((dropdown) => {
+				VIEWS.forEach((view, index) => {
+					dropdown.addOption(index.toString(), view);
+				});
+				dropdown.setValue(
+					VIEWS.indexOf(
+						this.plugin.settings.defaultCalendarView
+					).toString()
+				);
+				dropdown.onChange(async (index) => {
+					this.plugin.settings.defaultCalendarView =
+						VIEWS[Number(index)];
 					await this.plugin.saveSettings();
 				});
 			});
