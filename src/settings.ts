@@ -26,6 +26,7 @@ export interface FullCalendarSettings {
 	recursiveLocal: boolean;
 	firstDay: number;
 	defaultCalendarView: string;
+	calendarViewPersistency: boolean;
 }
 
 export const DEFAULT_SETTINGS: FullCalendarSettings = {
@@ -34,6 +35,7 @@ export const DEFAULT_SETTINGS: FullCalendarSettings = {
 	recursiveLocal: false,
 	firstDay: 0,
 	defaultCalendarView: "",
+	calendarViewPersistency: false,
 };
 
 const WEEKDAYS = [
@@ -166,6 +168,17 @@ export class FullCalendarSettingTab extends PluginSettingTab {
 				dropdown.setValue(this.plugin.settings.firstDay.toString());
 				dropdown.onChange(async (codeAsString) => {
 					this.plugin.settings.firstDay = Number(codeAsString);
+					await this.plugin.saveSettings();
+				});
+			});
+
+		new Setting(containerEl)
+			.setName("Calendar view persistency")
+			.setDesc("Reopen the calendar in last used view")
+			.addToggle((toggle) => {
+				toggle.setValue(this.plugin.settings.calendarViewPersistency);
+				toggle.onChange(async (val) => {
+					this.plugin.settings.calendarViewPersistency = val;
 					await this.plugin.saveSettings();
 				});
 			});

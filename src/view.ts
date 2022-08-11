@@ -98,6 +98,12 @@ export class CalendarView extends ItemView {
 		}
 
 		this.calendar = renderCalendar(calendarEl, sources, {
+			datesSet: async (info) => {
+				if (this.plugin.settings.calendarViewPersistency) {
+					this.plugin.settings.defaultCalendarView = info.view.type;
+					await this.plugin.saveSettings();
+				}
+			},
 			eventClick: async (info) => {
 				if (
 					info.jsEvent.getModifierState("Control") ||
@@ -170,6 +176,8 @@ export class CalendarView extends ItemView {
 			},
 			firstDay: this.plugin.settings.firstDay,
 			defaultCalendarView: this.plugin.settings.defaultCalendarView,
+			calendarViewPersistency:
+				this.plugin.settings.calendarViewPersistency,
 		});
 
 		this.plugin.settings.calendarSources

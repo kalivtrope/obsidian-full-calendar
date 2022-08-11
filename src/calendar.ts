@@ -3,6 +3,7 @@
  */
 import {
 	Calendar,
+	DatesSetArg,
 	EventApi,
 	EventClickArg,
 	EventHoveringArg,
@@ -16,12 +17,14 @@ import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import iCalendarPlugin from "@fullcalendar/icalendar";
 
 interface ExtraRenderProps {
+	datesSet?: (info: DatesSetArg) => void;
 	eventClick?: (info: EventClickArg) => void;
 	select?: (startDate: Date, endDate: Date, allDay: boolean) => Promise<void>;
 	modifyEvent?: (event: EventApi, oldEvent: EventApi) => Promise<boolean>;
 	eventMouseEnter?: (info: EventHoveringArg) => void;
 	firstDay?: number;
 	defaultCalendarView?: string;
+	calendarViewPersistency?: boolean;
 }
 
 export function renderCalendar(
@@ -30,7 +33,8 @@ export function renderCalendar(
 	settings?: ExtraRenderProps
 ): Calendar {
 	const isMobile = window.innerWidth < 500;
-	const { eventClick, select, modifyEvent, eventMouseEnter } = settings || {};
+	const { datesSet, eventClick, select, modifyEvent, eventMouseEnter } =
+		settings || {};
 	const modifyEventCallback =
 		modifyEvent &&
 		(async ({
@@ -91,7 +95,7 @@ export function renderCalendar(
 		firstDay: settings?.firstDay,
 		eventSources,
 		eventClick,
-
+		datesSet,
 		selectable: select && true,
 		selectMirror: select && true,
 		select:
