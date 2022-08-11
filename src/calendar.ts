@@ -25,7 +25,7 @@ interface ExtraRenderProps {
 	firstDay?: number;
 	defaultCalendarView?: string;
 	calendarViewPersistency?: boolean;
-	defaultStartDate?: Date;
+	initialDate?: Date;
 }
 
 export function renderCalendar(
@@ -94,6 +94,7 @@ export function renderCalendar(
 			},
 		},
 		firstDay: settings?.firstDay,
+		initialDate: settings?.initialDate,
 		eventSources,
 		eventClick,
 		datesSet,
@@ -112,9 +113,6 @@ export function renderCalendar(
 
 		eventMouseEnter,
 	});
-	if (settings?.calendarViewPersistency) {
-		cal.gotoDate(settings?.defaultStartDate);
-	}
 	cal.render();
 	return cal;
 }
