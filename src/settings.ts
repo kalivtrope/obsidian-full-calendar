@@ -27,6 +27,7 @@ export interface FullCalendarSettings {
 	firstDay: number;
 	defaultCalendarView: string;
 	calendarViewPersistency: boolean;
+	defaultStartDate: Date;
 }
 
 export const DEFAULT_SETTINGS: FullCalendarSettings = {
@@ -36,6 +37,7 @@ export const DEFAULT_SETTINGS: FullCalendarSettings = {
 	firstDay: 0,
 	defaultCalendarView: "",
 	calendarViewPersistency: false,
+	defaultStartDate: new Date(),
 };
 
 const WEEKDAYS = [

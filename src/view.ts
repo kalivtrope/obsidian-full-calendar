@@ -101,6 +101,7 @@ export class CalendarView extends ItemView {
 			datesSet: async (info) => {
 				if (this.plugin.settings.calendarViewPersistency) {
 					this.plugin.settings.defaultCalendarView = info.view.type;
+					this.plugin.settings.defaultStartDate = info.start;
 					await this.plugin.saveSettings();
 				}
 			},
@@ -178,6 +179,7 @@ export class CalendarView extends ItemView {
 			defaultCalendarView: this.plugin.settings.defaultCalendarView,
 			calendarViewPersistency:
 				this.plugin.settings.calendarViewPersistency,
+			defaultStartDate: this.plugin.settings.defaultStartDate,
 		});
 
 		this.plugin.settings.calendarSources
