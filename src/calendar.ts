@@ -94,7 +94,9 @@ export function renderCalendar(
 			},
 		},
 		firstDay: settings?.firstDay,
-		initialDate: settings?.initialDate,
+		initialDate: settings?.calendarViewPersistency
+			? settings?.initialDate
+			: Date.now(),
 		eventSources,
 		eventClick,
 		datesSet,
