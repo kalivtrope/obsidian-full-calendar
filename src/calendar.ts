@@ -110,7 +110,6 @@ export function renderCalendar(
 		editable: modifyEvent && true,
 		eventDrop: modifyEventCallback,
 		eventResize: modifyEventCallback,
-
 		eventMouseEnter,
 	});
 	cal.render();
